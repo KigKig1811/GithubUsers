@@ -1,6 +1,7 @@
 package com.xt.githubusers.data.mapper
 
 import com.xt.githubusers.data.dto.UserDto
+import com.xt.githubusers.data.room.entity.UserEntity
 import com.xt.githubusers.domain.model.UserModel
 
 object UserMapper {
@@ -24,6 +25,50 @@ object UserMapper {
         starredUrl = dto.starredUrl,
         subscriptionsUrl = dto.subscriptionsUrl,
         userViewType = dto.userViewType
+    )
+
+    fun toEntity(user: UserModel) = UserEntity(
+        id = user.id,
+        login = user.login,
+        nodeId = user.nodeId,
+        type = user.type,
+        siteAdmin = user.siteAdmin,
+        avatarUrl = user.avatarUrl,
+        htmlUrl = user.htmlUrl,
+        url = user.url,
+        gravatarId = user.gravatarId,
+        eventsUrl = user.eventsUrl,
+        followersUrl = user.followersUrl,
+        followingUrl = user.followingUrl,
+        gistsUrl = user.gistsUrl,
+        organizationsUrl = user.organizationsUrl,
+        receivedEventsUrl = user.receivedEventsUrl,
+        reposUrl = user.reposUrl,
+        starredUrl = user.starredUrl,
+        subscriptionsUrl = user.subscriptionsUrl,
+        userViewType = user.userViewType
+    )
+
+    fun entityToModel(entity: UserEntity) = UserModel(
+        id = entity.id,
+        login = entity.login,
+        nodeId = entity.nodeId,
+        type = entity.type,
+        siteAdmin = entity.siteAdmin,
+        avatarUrl = entity.avatarUrl,
+        htmlUrl = entity.htmlUrl,
+        url = entity.url,
+        gravatarId = entity.gravatarId,
+        eventsUrl = entity.eventsUrl,
+        followersUrl = entity.followersUrl,
+        followingUrl = entity.followingUrl,
+        gistsUrl = entity.gistsUrl,
+        organizationsUrl = entity.organizationsUrl,
+        receivedEventsUrl = entity.receivedEventsUrl,
+        reposUrl = entity.reposUrl,
+        starredUrl = entity.starredUrl,
+        subscriptionsUrl = entity.subscriptionsUrl,
+        userViewType = entity.userViewType
     )
 }
 
