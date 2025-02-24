@@ -29,7 +29,8 @@ androidxTestJunit = "1.2.1"
 mockito = "5.12.0"
 mockito-kotlin = "5.4.0"
 lifecycleProcess = "2.8.7"
-paging = "3.3.6"
+mockkVersion = "1.13.16"
+junitKtx = "1.2.1"
 
 [plugins]
 # initial
@@ -57,10 +58,12 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "androidxRoom" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "androidxRoom" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTest" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidxTestJunit" }
 androidx-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 androidx-paging = { module = "androidx.paging:paging-runtime", version.ref = "androidXPaging" }
+androidx-paging-test = { module = "androidx.paging:paging-common", version.ref = "androidXPaging" }
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
@@ -73,14 +76,15 @@ coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", vers
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerView" }
-androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "paging" }
-androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 # unit test
 junit = { module = "junit:junit", version.ref = "junit" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
+androidx-paging-testing-android = { group = "androidx.paging", name = "paging-testing-android", version.ref = "androidXPaging" }

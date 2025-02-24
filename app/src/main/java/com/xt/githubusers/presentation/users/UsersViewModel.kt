@@ -9,8 +9,6 @@ import com.xt.githubusers.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -24,9 +22,6 @@ class UsersViewModel
     private val _usersState = MutableStateFlow<UiState>(UiState.Loading)
     val usersState = _usersState.asStateFlow()
 
-    private val _users = MutableStateFlow<PagingData<UserModel>>(PagingData.empty())
-    val users = _users.asStateFlow()
-
     init {
         Timber.d("UsersViewModel init in: ${System.currentTimeMillis()}")
         fetchUsers()
@@ -34,32 +29,18 @@ class UsersViewModel
 
     private fun fetchUsers() {
         viewModelScope.launch {
+            _usersState.value = UiState.Loading
             kotlin.runCatching {
                 fetchUsersUseCase.invoke()
                     .cachedIn(viewModelScope)
                     .collect { data ->
-                        _users.value = data
+                        _usersState.value = UiState.Success(data = data)
                     }
             }.onFailure { throwable ->
-
+                _usersState.value = UiState.Error(throwable.localizedMessage ?: "Unknown error")
             }
         }
     }
-
-//    private fun fetchUsers() {
-//        viewModelScope.launch {
-//            _usersState.value = UiState.Loading
-//            kotlin.runCatching {
-//                fetchUsersUseCase.invoke()
-//                    .cachedIn(viewModelScope)
-//                    .collect { data ->
-//                        _usersState.value = UiState.Success(data = data)
-//                    }
-//            }.onFailure { throwable ->
-//                _usersState.value = UiState.Error(throwable.localizedMessage ?: "Unknown error")
-//            }
-//        }
-//    }
 }
 
 sealed class UiState {
