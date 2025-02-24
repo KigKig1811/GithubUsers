@@ -55,6 +55,8 @@ dependencies {
 
     // Dependency Injection (Hilt)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.paging.testing.android)
     ksp(libs.hilt.compiler)
     androidTestImplementation(libs.hilt.testing)
     kspAndroidTest(libs.hilt.compiler)
@@ -95,9 +97,13 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.androidx.paging.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.androidx.room.testing)
 
     // UI Testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.coroutines.test)
 }

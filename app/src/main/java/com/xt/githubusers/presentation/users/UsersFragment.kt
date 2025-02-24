@@ -54,39 +54,34 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
 
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.users.collectLatest {
-                        usersAdapter.submitData(lifecycle, it)
+                    viewModel.usersState.collectLatest { state ->
+                        when (state) {
+                            is UiState.Loading -> {
+//                                progressBar.visibility = View.VISIBLE
+//                                recyclerView.visibility = View.GONE
+//                                errorText.visibility = View.GONE
+                            }
+
+                            is UiState.Success -> {
+                                usersAdapter.submitData(lifecycle, state.data)
+
+//                                progressBar.visibility = View.GONE
+//                                recyclerView.visibility = View.VISIBLE
+//                                errorText.visibility = View.GONE
+//                                adapter.submitData(lifecycle, state.data) // Cập nhật dữ liệu cho RecyclerView
+                            }
+
+                            is UiState.Error -> {
+//                                progressBar.visibility = View.GONE
+//                                recyclerView.visibility = View.GONE
+//                                errorText.visibility = View.VISIBLE
+//                                errorText.text = state.message
+                            }
+                        }
                     }
                 }
-//                launch {
-//                    viewModel.usersState.collectLatest { state ->
-//                        when (state) {
-//                            is UiState.Loading -> {
-////                                progressBar.visibility = View.VISIBLE
-////                                recyclerView.visibility = View.GONE
-////                                errorText.visibility = View.GONE
-//                            }
-//
-//                            is UiState.Success -> {
-//                                usersAdapter.submitData(lifecycle, state.data)
-//
-////                                progressBar.visibility = View.GONE
-////                                recyclerView.visibility = View.VISIBLE
-////                                errorText.visibility = View.GONE
-////                                adapter.submitData(lifecycle, state.data) // Cập nhật dữ liệu cho RecyclerView
-//                            }
-//
-//                            is UiState.Error -> {
-////                                progressBar.visibility = View.GONE
-////                                recyclerView.visibility = View.GONE
-////                                errorText.visibility = View.VISIBLE
-////                                errorText.text = state.message
-//                            }
-//                        }
-//                    }
-//                }
             }
         }
     }

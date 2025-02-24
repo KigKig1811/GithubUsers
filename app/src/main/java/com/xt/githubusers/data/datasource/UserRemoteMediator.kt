@@ -10,7 +10,9 @@ import com.xt.githubusers.data.room.dao.RemoteKeyDao
 import com.xt.githubusers.data.room.dao.UserDao
 import com.xt.githubusers.data.room.entity.RemoteKeyEntity
 import com.xt.githubusers.data.room.entity.UserEntity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -21,14 +23,30 @@ class UserRemoteMediator(
     private val userApiService: UserApiService
 ) : RemoteMediator<Int, UserEntity>() {
 
+    /**
+     * Initializes the data fetching process based on cached data freshness.
+     *
+     * @return [InitializeAction.SKIP_INITIAL_REFRESH] if the cached data is considered fresh,
+     *         or [InitializeAction.LAUNCH_INITIAL_REFRESH] if the data is stale and needs a full refresh.
+     * The cacheTimeout is set to 1 hour.
+     */
+    override suspend fun initialize(): InitializeAction {
+        val cacheTimeout = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
+        return withContext(Dispatchers.IO) {
+            if (System.currentTimeMillis() - (remoteKeyDao.getCreationTime() ?: 0) < cacheTimeout) {
+                InitializeAction.SKIP_INITIAL_REFRESH
+            } else {
+                InitializeAction.LAUNCH_INITIAL_REFRESH
+            }
+        }
+    }
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, UserEntity>
     ): MediatorResult {
         return try {
             // Determine the page to load based on the LoadType
-            Timber.d("KKK LoadType: $loadType")
-
             val page = when (loadType) {
                 LoadType.REFRESH -> 0
 

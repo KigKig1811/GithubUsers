@@ -32,7 +32,8 @@ constructor(
             config = PagingConfig(
                 pageSize = perPage,
                 enablePlaceholders = false,
-                initialLoadSize = 20
+                prefetchDistance = perPage / 2,
+                initialLoadSize = perPage * 2
             ),
             remoteMediator = UserRemoteMediator(
                 userDao = userDao,
@@ -42,7 +43,6 @@ constructor(
             pagingSourceFactory = {
                 userDao.fetchUsers()
             },
-            initialKey = 0,
         ).flow.map { pagingData ->
             pagingData.map { UserMapper.entityToModel(entity = it) }
         }
