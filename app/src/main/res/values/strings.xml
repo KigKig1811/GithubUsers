@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GithubUsers</string>
+    <string name="blog">Blog</string>
+    <string name="follower">%1$s\nFollower</string>
+    <string name="following">%1$s\nFollowing</string>
+    <string name="users_details">Users Details</string>
+    <string name="github_users">Github Users</string>
+    <string name="retry">Retry</string>
 </resources>

@@ -19,8 +19,8 @@ class UsersViewModel
     private val fetchUsersUseCase: FetchUsersUseCase
 ) : BaseViewModel() {
 
-    private val _usersState = MutableStateFlow<UiState>(UiState.Loading)
-    val usersState = _usersState.asStateFlow()
+    private val _users = MutableStateFlow<PagingData<UserModel>>(PagingData.empty())
+    val users = _users.asStateFlow()
 
     init {
         Timber.d("UsersViewModel init in: ${System.currentTimeMillis()}")
@@ -29,22 +29,11 @@ class UsersViewModel
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            _usersState.value = UiState.Loading
-            kotlin.runCatching {
-                fetchUsersUseCase.invoke()
-                    .cachedIn(viewModelScope)
-                    .collect { data ->
-                        _usersState.value = UiState.Success(data = data)
-                    }
-            }.onFailure { throwable ->
-                _usersState.value = UiState.Error(throwable.localizedMessage ?: "Unknown error")
-            }
+            fetchUsersUseCase.invoke()
+                .cachedIn(viewModelScope)
+                .collect { data ->
+                    _users.value = data
+                }
         }
     }
-}
-
-sealed class UiState {
-    data object Loading : UiState()
-    data class Success(val data: PagingData<UserModel>) : UiState()
-    data class Error(val message: String) : UiState()
 }

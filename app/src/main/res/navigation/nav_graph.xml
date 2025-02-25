@@ -9,6 +9,21 @@
         android:id="@+id/usersFragment"
         android:name="com.xt.githubusers.presentation.users.UsersFragment"
         android:label="UsersFragment"
-        tools:layout="@layout/fragment_users" />
+        tools:layout="@layout/fragment_users">
+        <action
+            android:id="@+id/action_usersFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userDetailsFragment"
+        android:name="com.xt.githubusers.presentation.user_detail.UserDetailsFragment"
+        android:label="UserDetailsFragment"
+        tools:layout="@layout/fragment_user_detail">
+        <argument
+            android:name="selectedUser"
+            app:argType="string" />
+
+    </fragment>
 
 </navigation>

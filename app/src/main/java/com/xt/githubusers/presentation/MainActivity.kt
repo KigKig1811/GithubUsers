@@ -1,9 +1,8 @@
 package com.xt.githubusers.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import com.xt.githubusers.R
+import androidx.core.view.isVisible
 import com.xt.githubusers.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +16,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.ivBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    fun setToolbarTitle(title: String, showBack: Boolean = true) {
+        binding.tvToolbarTitle.text = title
+        binding.ivBack.isVisible = showBack
     }
 
     override fun onDestroy() {

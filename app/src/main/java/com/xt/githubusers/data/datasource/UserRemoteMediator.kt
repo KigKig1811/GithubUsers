@@ -11,9 +11,7 @@ import com.xt.githubusers.data.room.dao.UserDao
 import com.xt.githubusers.data.room.entity.RemoteKeyEntity
 import com.xt.githubusers.data.room.entity.UserEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalPagingApi::class)
@@ -57,7 +55,6 @@ class UserRemoteMediator(
                 LoadType.APPEND -> {
                     // For appending, we need to get the next key from the remote key table.
                     val remoteKey = remoteKeyDao.remoteKey(id = 0)
-                    Timber.d("KKK RemoteKey: $remoteKey")
                     if (remoteKey.nextKey == null) {
                         return MediatorResult.Success(endOfPaginationReached = true)
                     }
@@ -80,7 +77,6 @@ class UserRemoteMediator(
 
             // Clear the database if it's a refresh.
             if (loadType == LoadType.REFRESH) {
-                Timber.d("KKK Clearing old users...")
                 userDao.clearUsers()
                 remoteKeyDao.clearRemoteKeys()
             }

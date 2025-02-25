@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="20dp">
+
+    <include
+        android:id="@+id/layoutInfo"
+        layout="@layout/item_user" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivFollower"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/ivFollowing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutInfo"
+        app:srcCompat="@drawable/ic_follower" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivFollowing"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivFollower"
+        app:layout_constraintTop_toTopOf="@+id/ivFollower"
+        app:srcCompat="@drawable/ic_following" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFollower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/ivFollower"
+        app:layout_constraintStart_toStartOf="@+id/ivFollower"
+        app:layout_constraintTop_toBottomOf="@+id/ivFollower"
+        tools:text="100+\nFollower" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFollowing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/ivFollowing"
+        app:layout_constraintStart_toStartOf="@+id/ivFollowing"
+        app:layout_constraintTop_toBottomOf="@+id/ivFollowing"
+        tools:text="100+\nFollowing" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleBlog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/blog"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/tvFollower" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvBlog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleBlog"
+        tools:text="@string/blog" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="ivFollower, ivFollowing,tvTitleBlog,layoutInfo"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/redC5241B"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

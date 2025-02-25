@@ -5,9 +5,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.xt.githubusers.R
 import com.xt.githubusers.databinding.FragmentUsersBinding
+import com.xt.githubusers.presentation.MainActivity
+import com.xt.githubusers.presentation.users.adapter.LoadStateAdapter
 import com.xt.githubusers.presentation.users.adapter.UserAdapter
 import com.xt.githubusers.presentation.users.viewholder.dpToPx
 import com.xt.githubusers.utils.BaseFragment
@@ -15,7 +18,6 @@ import com.xt.githubusers.utils.VerticalSpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::inflate) {
@@ -23,7 +25,11 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
     override val viewModel: UsersViewModel by viewModels()
 
     private val usersAdapter: UserAdapter by lazy {
-        UserAdapter()
+        UserAdapter { selectedUser ->
+            findNavController().navigate(
+                UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(selectedUser)
+            )
+        }
     }
 
     override fun onFragmentCreated(savedInstanceState: Bundle?) {
@@ -32,9 +38,11 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
     }
 
     private fun initUi() {
+        (activity as? MainActivity)?.setToolbarTitle(title = getString(R.string.github_users))
         binding.rcvUsers.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = usersAdapter
+            val footerAdapter = LoadStateAdapter { usersAdapter.retry() }
+            adapter = usersAdapter.withLoadStateFooter(footer = footerAdapter)
             val itemDecoration =
                 VerticalSpaceItemDecoration(
                     context.dpToPx(8),
@@ -43,43 +51,14 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
             addItemDecoration(itemDecoration)
         }
 
-        usersAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                super.onChanged()
-                Timber.d("KKK Updated Data: ${usersAdapter.itemCount}")
-            }
-        })
-
     }
 
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.usersState.collectLatest { state ->
-                        when (state) {
-                            is UiState.Loading -> {
-//                                progressBar.visibility = View.VISIBLE
-//                                recyclerView.visibility = View.GONE
-//                                errorText.visibility = View.GONE
-                            }
-
-                            is UiState.Success -> {
-                                usersAdapter.submitData(lifecycle, state.data)
-
-//                                progressBar.visibility = View.GONE
-//                                recyclerView.visibility = View.VISIBLE
-//                                errorText.visibility = View.GONE
-//                                adapter.submitData(lifecycle, state.data) // Cập nhật dữ liệu cho RecyclerView
-                            }
-
-                            is UiState.Error -> {
-//                                progressBar.visibility = View.GONE
-//                                recyclerView.visibility = View.GONE
-//                                errorText.visibility = View.VISIBLE
-//                                errorText.text = state.message
-                            }
-                        }
+                    viewModel.users.collectLatest { data ->
+                        usersAdapter.submitData(lifecycle, data)
                     }
                 }
             }
