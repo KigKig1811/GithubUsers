@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 class UserRemoteMediator(
     private val userDao: UserDao,
     private val remoteKeyDao: RemoteKeyDao,
-    private val userApiService: UserApiService
+    private val userApiService: UserApiService,
 ) : RemoteMediator<Int, UserEntity>() {
 
     /**

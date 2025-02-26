@@ -30,14 +30,14 @@ constructor(
         Pager(
             config = PagingConfig(
                 pageSize = perPage,
-                enablePlaceholders = false,
-                prefetchDistance = perPage / 2,
-                initialLoadSize = perPage * 2
+                enablePlaceholders = true,
+                prefetchDistance = 5,
+                initialLoadSize = perPage
             ),
             remoteMediator = UserRemoteMediator(
                 userDao = userDao,
                 remoteKeyDao = remoteKeyDao,
-                userApiService = userApiService
+                userApiService = userApiService,
             ),
             pagingSourceFactory = {
                 userDao.fetchUsers()

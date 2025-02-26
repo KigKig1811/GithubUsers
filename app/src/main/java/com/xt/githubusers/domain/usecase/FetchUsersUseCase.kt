@@ -6,6 +6,13 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * `FetchUsersUseCase` is a Use Case responsible for fetching a list of users from the repository.
+ *
+ * @property repository The `UserRepository` instance used to fetch the user data.
+ * @constructor Creates a `FetchUsersUseCase` with the provided `UserRepository`.
+ *
+ */
 @Singleton
 class FetchUsersUseCase
 @Inject

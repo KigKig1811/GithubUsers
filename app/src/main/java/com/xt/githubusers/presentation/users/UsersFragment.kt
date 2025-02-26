@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.xt.githubusers.R
 import com.xt.githubusers.databinding.FragmentUsersBinding
 import com.xt.githubusers.presentation.MainActivity
-import com.xt.githubusers.presentation.users.adapter.LoadStateAdapter
 import com.xt.githubusers.presentation.users.adapter.UserAdapter
 import com.xt.githubusers.presentation.users.viewholder.dpToPx
 import com.xt.githubusers.utils.BaseFragment
@@ -41,8 +40,7 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
         (activity as? MainActivity)?.setToolbarTitle(title = getString(R.string.github_users))
         binding.rcvUsers.apply {
             layoutManager = LinearLayoutManager(context)
-            val footerAdapter = LoadStateAdapter { usersAdapter.retry() }
-            adapter = usersAdapter.withLoadStateFooter(footer = footerAdapter)
+            adapter = usersAdapter
             val itemDecoration =
                 VerticalSpaceItemDecoration(
                     context.dpToPx(8),

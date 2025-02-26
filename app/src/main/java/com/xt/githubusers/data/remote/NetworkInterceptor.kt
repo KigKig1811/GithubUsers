@@ -17,7 +17,7 @@ class NetworkInterceptor @Inject constructor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         // Create a new request with an added Authorization header
         val request = chain.request().newBuilder()
-            .addHeader("Authorization", "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") // Adds the API token
+            .addHeader("Authorization", "Bearer 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") // Adds the API token
             .build()
 
         // Proceed with the modified request

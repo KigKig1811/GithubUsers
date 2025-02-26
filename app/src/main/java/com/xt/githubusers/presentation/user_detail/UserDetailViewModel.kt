@@ -33,7 +33,7 @@ constructor(
         getUserDetail()
     }
 
-    private fun getUserDetail() {
+    fun getUserDetail() {
         viewModelScope.launch {
             _uiState.value = Result.Loading
             val result = fetchUserDetailsUseCase.invoke(userName = userName)

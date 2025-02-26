@@ -13,21 +13,6 @@ object UserMapper {
         followers = dto.followers,
         following = dto.following,
         location = dto.location,
-//        nodeId = dto.nodeId,
-//        type = dto.type,
-//        siteAdmin = dto.siteAdmin,
-//        url = dto.url,
-//        gravatarId = dto.gravatarId,
-//        eventsUrl = dto.eventsUrl,
-//        followersUrl = dto.followersUrl,
-//        followingUrl = dto.followingUrl,
-//        gistsUrl = dto.gistsUrl,
-//        organizationsUrl = dto.organizationsUrl,
-//        receivedEventsUrl = dto.receivedEventsUrl,
-//        reposUrl = dto.reposUrl,
-//        starredUrl = dto.starredUrl,
-//        subscriptionsUrl = dto.subscriptionsUrl,
-//        userViewType = dto.userViewType
     )
 
     fun toEntity(user: UserModel) = UserEntity(
@@ -38,21 +23,6 @@ object UserMapper {
         followers = user.followers,
         following = user.following,
         location = user.location,
-//        nodeId = user.nodeId,
-//        type = user.type,
-//        siteAdmin = user.siteAdmin,
-//        url = user.url,
-//        gravatarId = user.gravatarId,
-//        eventsUrl = user.eventsUrl,
-//        followersUrl = user.followersUrl,
-//        followingUrl = user.followingUrl,
-//        gistsUrl = user.gistsUrl,
-//        organizationsUrl = user.organizationsUrl,
-//        receivedEventsUrl = user.receivedEventsUrl,
-//        reposUrl = user.reposUrl,
-//        starredUrl = user.starredUrl,
-//        subscriptionsUrl = user.subscriptionsUrl,
-//        userViewType = user.userViewType
     )
 
     fun entityToModel(entity: UserEntity) = UserModel(
@@ -63,21 +33,6 @@ object UserMapper {
         followers = entity.followers,
         following = entity.following,
         location = entity.location,
-//        nodeId = entity.nodeId,
-//        type = entity.type,
-//        siteAdmin = entity.siteAdmin,
-//        url = entity.url,
-//        gravatarId = entity.gravatarId,
-//        eventsUrl = entity.eventsUrl,
-//        followersUrl = entity.followersUrl,
-//        followingUrl = entity.followingUrl,
-//        gistsUrl = entity.gistsUrl,
-//        organizationsUrl = entity.organizationsUrl,
-//        receivedEventsUrl = entity.receivedEventsUrl,
-//        reposUrl = entity.reposUrl,
-//        starredUrl = entity.starredUrl,
-//        subscriptionsUrl = entity.subscriptionsUrl,
-//        userViewType = entity.userViewType
     )
 }
 
