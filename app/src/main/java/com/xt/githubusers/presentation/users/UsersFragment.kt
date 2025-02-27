@@ -1,15 +1,18 @@
 package com.xt.githubusers.presentation.users
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xt.githubusers.R
 import com.xt.githubusers.databinding.FragmentUsersBinding
 import com.xt.githubusers.presentation.MainActivity
+import com.xt.githubusers.presentation.users.adapter.LoadStateAdapter
 import com.xt.githubusers.presentation.users.adapter.UserAdapter
 import com.xt.githubusers.presentation.users.viewholder.dpToPx
 import com.xt.githubusers.utils.BaseFragment
@@ -40,13 +43,19 @@ class UsersFragment : BaseFragment<FragmentUsersBinding>(FragmentUsersBinding::i
         (activity as? MainActivity)?.setToolbarTitle(title = getString(R.string.github_users))
         binding.rcvUsers.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = usersAdapter
+            adapter = usersAdapter.withLoadStateFooter(footer = LoadStateAdapter(retry = {
+                usersAdapter.retry()
+            }))
             val itemDecoration =
                 VerticalSpaceItemDecoration(
                     context.dpToPx(8),
                     true
                 )
             addItemDecoration(itemDecoration)
+        }
+        usersAdapter.addLoadStateListener { loadState ->
+            binding.progressBar.isVisible = loadState.refresh is LoadState.Loading
+            binding.rcvUsers.isVisible = loadState.refresh !is LoadState.Loading
         }
 
     }

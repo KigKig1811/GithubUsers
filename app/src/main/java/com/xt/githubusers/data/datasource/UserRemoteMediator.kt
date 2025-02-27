@@ -10,9 +10,7 @@ import com.xt.githubusers.data.room.dao.RemoteKeyDao
 import com.xt.githubusers.data.room.dao.UserDao
 import com.xt.githubusers.data.room.entity.RemoteKeyEntity
 import com.xt.githubusers.data.room.entity.UserEntity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalPagingApi::class)
 class UserRemoteMediator(
@@ -20,24 +18,6 @@ class UserRemoteMediator(
     private val remoteKeyDao: RemoteKeyDao,
     private val userApiService: UserApiService,
 ) : RemoteMediator<Int, UserEntity>() {
-
-    /**
-     * Initializes the data fetching process based on cached data freshness.
-     *
-     * @return [InitializeAction.SKIP_INITIAL_REFRESH] if the cached data is considered fresh,
-     *         or [InitializeAction.LAUNCH_INITIAL_REFRESH] if the data is stale and needs a full refresh.
-     * The cacheTimeout is set to 1 hour.
-     */
-    override suspend fun initialize(): InitializeAction {
-        val cacheTimeout = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
-        return withContext(Dispatchers.IO) {
-            if (System.currentTimeMillis() - (remoteKeyDao.getCreationTime() ?: 0) < cacheTimeout) {
-                InitializeAction.SKIP_INITIAL_REFRESH
-            } else {
-                InitializeAction.LAUNCH_INITIAL_REFRESH
-            }
-        }
-    }
 
     override suspend fun load(
         loadType: LoadType,
@@ -67,6 +47,8 @@ class UserRemoteMediator(
                 LoadType.REFRESH -> state.config.initialLoadSize
                 else -> state.config.pageSize
             }
+
+            delay(1000)
 
             val response = userApiService.fetchUsers(
                 since = page * perPage,
