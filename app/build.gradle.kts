@@ -40,6 +40,10 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    tasks.withType<Test>().configureEach {
+        jvmArgs("-XX:+EnableDynamicAgentLoading")
+    }
+
 }
 
 dependencies {
@@ -98,9 +102,10 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.coroutines.test)
-    testImplementation(libs.androidx.paging.test)
+    testImplementation(libs.androidx.paging.common)
     testImplementation(libs.mockk)
     testImplementation(libs.androidx.room.testing)
+    testImplementation(libs.androidx.paging.test)
 
     // UI Testing
     androidTestImplementation(libs.androidx.junit)

@@ -27,7 +27,7 @@ class UsersViewModel
         fetchUsers()
     }
 
-     fun fetchUsers() {
+    private fun fetchUsers() {
         viewModelScope.launch {
             fetchUsersUseCase.invoke()
                 .cachedIn(viewModelScope)

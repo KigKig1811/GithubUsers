@@ -65,7 +65,8 @@ androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTes
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidxTestJunit" }
 androidx-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 androidx-paging = { module = "androidx.paging:paging-runtime", version.ref = "androidXPaging" }
-androidx-paging-test = { module = "androidx.paging:paging-common", version.ref = "androidXPaging" }
+androidx-paging-common = { module = "androidx.paging:paging-common-ktx", version.ref = "androidXPaging" }
+androidx-paging-test = { module = "androidx.paging:paging-testing", version.ref = "androidXPaging" }
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
