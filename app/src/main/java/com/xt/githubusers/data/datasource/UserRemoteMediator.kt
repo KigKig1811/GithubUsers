@@ -48,7 +48,7 @@ class UserRemoteMediator(
                 else -> state.config.pageSize
             }
 
-            delay(1000)
+            delay(100)
 
             val response = userApiService.fetchUsers(
                 since = page * perPage,
